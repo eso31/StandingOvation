@@ -21,10 +21,22 @@ public class StandingOvation{
 		System.out.print("input: ");
 		String input = miScanner2.nextLine();
 		
+		String smaxString = "";
+		int start= 0;
+		for(int i=0; i<input.length(); i++){
+			if((input.charAt(i)+"").equals(" "))
+				break;
+			else
+				smaxString += input.charAt(i);
+
+			start++;
+		}
+		//System.out.println("Smax: "+smaxString);
 		
-		int Smax = Integer.parseInt(input.charAt(0) + "");
-		String people = input.substring(2,input.length());
-		
+		int Smax = Integer.parseInt(smaxString);
+		String people = input.substring(start+1,input.length());
+		//System.out.println("people: "+people);
+
 		if(Smax!=people.length()-1){
 			System.out.println("Invalid data!");
 			return;
