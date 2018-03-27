@@ -1,15 +1,15 @@
-import java.io.*;
 import java.util.*;
+
 public class StandingOvation{
 	public static void main(String arg[]){
 		new StandingOvation();
 	}
 	
 	public StandingOvation(){
-		Scanner miScanner = new Scanner(System.in);
+		Scanner myScanner = new Scanner(System.in);
 		
 		System.out.print("Tests: ");
-		int tests = Integer.parseInt(miScanner.nextLine());
+		int tests = Integer.parseInt(myScanner.next());
 		
 		for(int i=0;i<tests;i++){
 			test(i+1);
@@ -17,45 +17,43 @@ public class StandingOvation{
 	}
 	
 	public void test(int numberOfCase){
-		Scanner miScanner2 = new Scanner(System.in);
-		System.out.print("input: ");
-		String input = miScanner2.nextLine();
+		Scanner myScanner2 = new Scanner(System.in);
+		//We need two inputs in this point, one to assign the max shyness, and second, the string of levels
+		System.out.print("\nEnter shyness max level:");
+		int inputMaxShyness = Integer.parseInt(myScanner2.next());
 		
-		
-		int Smax = Integer.parseInt(input.charAt(0) + "");
-		String people = input.substring(2,input.length());
-		
-		if(Smax!=people.length()-1){
-			System.out.println("Invalid data!");
+		Scanner myScanner3 = new Scanner(System.in);
+		System.out.print("\nEnter the ammount of people of each level:");
+		String allPeopleByLevel = myScanner3.next();
+
+		if(allPeopleByLevel.length() != inputMaxShyness + 1){
+			System.out.println("\\nYou must enter the ammount of people of ALL levels.");
 			return;
 		}
 		
 		int standingPeople = 0;
-		int invited = 0;
+		int invitedPeople = 0;
+		int invitedTemp = 0;
 		
-		for(int i=0;i<people.length();i++){
+		//Since there is always a level of Shyness 0, the for loop requires <=
+		for(int i = 0; i <= inputMaxShyness; i++){
 			//System.out.println("Shyness lvl: "+i);
-			int numberOfPeople = Integer.parseInt(people.charAt(i)+"");
+			int numberByLevel = Integer.parseInt(allPeopleByLevel.charAt(i) + "");
 			
 			//System.out.println("people: "+numberOfPeople);
 			//System.out.println("standing people: "+standingPeople);
 			
-			if(numberOfPeople>0){
-				if(i<=standingPeople){
-					//System.out.println("Se levantan "+numberOfPeople);
-					standingPeople += numberOfPeople;
-				}
-				else{
-					invited += i-standingPeople;
-					//System.out.println("Invito a "+(i-standingPeople));
-					//System.out.println("Se levantan "+(numberOfPeople+i-standingPeople));
-					standingPeople += numberOfPeople+i-standingPeople;
-				}
+			//Here, you only need to check if the people stanging are less than the ones required for the level
+			//Then, we create a temporal variable to get the required people to invite
+			//Finally, we add that variable to both the standing and invited people
+			if(standingPeople < i){
+				invitedTemp = i - standingPeople;
+				standingPeople += invitedTemp;
+				invitedPeople += invitedTemp;
 			}
-				
+			standingPeople += numberByLevel;
 			//System.out.println("===================");
 		}
-		
-		System.out.println("Case #"+numberOfCase+": "+invited+"\n");
+		System.out.println("Case #" + numberOfCase + ": " + invitedPeople + "\n");
 	}
 }
