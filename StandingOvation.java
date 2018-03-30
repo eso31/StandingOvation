@@ -6,35 +6,29 @@ public class StandingOvation{
 	}
 	
 	public StandingOvation(){
-		Scanner miScanner = new Scanner(System.in);
+		String data[] = ReadFile("A-large-practice.in");
+		/*Scanner miScanner = new Scanner(System.in);
 		
 		System.out.print("Tests: ");
-		int tests = Integer.parseInt(miScanner.nextLine());
+		int tests = Integer.parseInt(miScanner.nextLine());*/
+
+		int tests = Integer.parseInt(data[0]);
 		
 		for(int i=0;i<tests;i++){
-			test(i+1);
+			String input = data[i+1];
+			int Smax = Integer.parseInt(input.split(" ")[0]);
+			String people = input.split(" ")[1];
+			test(i+1,Smax,people);
 		}
 	}
 	
-	public void test(int numberOfCase){
-		Scanner miScanner2 = new Scanner(System.in);
+	public void test(int numberOfCase, int Smax, String people){
+		/*Scanner miScanner2 = new Scanner(System.in);
 		System.out.print("input: ");
 		String input = miScanner2.nextLine();
-		
-		String smaxString = "";
-		int start= 0;
-		for(int i=0; i<input.length(); i++){
-			if((input.charAt(i)+"").equals(" "))
-				break;
-			else
-				smaxString += input.charAt(i);
 
-			start++;
-		}
-		//System.out.println("Smax: "+smaxString);
-		
-		int Smax = Integer.parseInt(smaxString);
-		String people = input.substring(start+1,input.length());
+		int Smax = Integer.parseInt(input.split(" ")[0]);
+		String people = input.split(" ")[1];*/
 		//System.out.println("people: "+people);
 
 		if(Smax!=people.length()-1){
@@ -68,6 +62,45 @@ public class StandingOvation{
 			//System.out.println("===================");
 		}
 		
-		System.out.println("Case #"+numberOfCase+": "+invited+"\n");
+		System.out.println("Case #"+numberOfCase+": "+invited);
+	}
+
+	public String[] ReadFile(String fileName){
+
+        // This will reference one line at a time
+        String line = null;
+        String fileString = "";
+
+        try {
+            // FileReader reads text files in the default encoding.
+            FileReader fileReader = 
+                new FileReader(fileName);
+
+            // Always wrap FileReader in BufferedReader.
+            BufferedReader bufferedReader = 
+                new BufferedReader(fileReader);
+
+            while((line = bufferedReader.readLine()) != null) {
+                fileString += line+",";
+            }   
+
+            // Always close files.
+            bufferedReader.close();         
+        }
+        catch(FileNotFoundException ex) {
+            System.out.println(
+                "Unable to open file '" + 
+                fileName + "'");                
+        }
+        catch(IOException ex) {
+            System.out.println(
+                "Error reading file '" 
+                + fileName + "'");                  
+            // Or we could just do this: 
+            // ex.printStackTrace();
+        }
+
+
+        return fileString.split(",");
 	}
 }
